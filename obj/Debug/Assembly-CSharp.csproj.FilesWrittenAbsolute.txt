@@ -12,3 +12,7 @@
 /Users/Brewmaster/Desktop/Doomsayer/Temp/bin/Debug/Unity.CecilTools.dll
 /Users/Brewmaster/Desktop/Doomsayer/Temp/bin/Debug/Mono.Cecil.Pdb.dll
 /Users/Brewmaster/Desktop/Doomsayer/Temp/bin/Debug/Mono.Cecil.Mdb.dll
+/Users/Brewmaster/Desktop/Doomsayer/Temp/bin/Debug/Assembly-CSharp.dll.mdb
+/Users/Brewmaster/Desktop/Doomsayer/Temp/bin/Debug/Assembly-CSharp.dll
+/Users/Brewmaster/Desktop/Doomsayer/obj/Debug/Assembly-CSharp.dll
+/Users/Brewmaster/Desktop/Doomsayer/obj/Debug/Assembly-CSharp.dll.mdb
