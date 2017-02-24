@@ -1,11 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
-using UnityEngine.UI;
+using System.Collections.Generic;
 
+public class CampaignManager : MonoBehaviour {
 
-public class UIBank : MonoBehaviour {
-	public bool mouseOnUI = false;
-	public Text daysLeftText;
 	// Use this for initialization
 	void Start () {
 	
@@ -15,4 +13,5 @@ public class UIBank : MonoBehaviour {
 	void Update () {
 	
 	}
+		
 }

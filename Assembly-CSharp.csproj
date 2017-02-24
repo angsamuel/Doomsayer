@@ -45,7 +45,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\CampaignManager.cs" />
      <Compile Include="Assets\Exit.cs" />
+     <Compile Include="Assets\Level.cs" />
      <Compile Include="Assets\Party.cs" />
      <Compile Include="Assets\PlayerInputController.cs" />
      <Compile Include="Assets\Scripts\GameController.cs" />

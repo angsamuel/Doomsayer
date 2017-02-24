@@ -4,6 +4,7 @@ using System.Collections;
 public class Party : MonoBehaviour {
 	int cordX;
 	int cordY;
+	public bool isPlayerParty = false;
 	GameController gameController;
 	// Use this for initialization
 	void Awake(){
@@ -24,11 +25,11 @@ public class Party : MonoBehaviour {
 			cordX = x; 
 			cordY = y;
 			return true;
-		} else if (x == gameController.exitX && y == gameController.exitY) {
+		} else if (x == gameController.exitX && y == gameController.exitY && isPlayerParty) {
 			transform.position = new Vector3 (x - gameController.GetLevelWidth () / 2, y - gameController.GetLevelHeight () / 2, transform.position.z);
 			cordX = x; 
 			cordY = y;
-			gameController.ChangeLevel (0, 10, 10);
+			gameController.ChangeLevel (0);
 			return true;
 		}
 		return false;
