@@ -12,22 +12,26 @@ public class GameController : MonoBehaviour {
 	UIBank uiBank;
 
 	//Enums
+	enum TimeOfDay{Midnight, Twilight, DayBreak, Morning, Noon, Afternoon, Evening, Night};
 	enum Direction {North, South, East, West};
 	public enum LevelType {Lava, Snow, Marsh, Desert, Fields};
 
 	//Objects
 	public GameObject tile;
 	public GameObject exit;
+	public Camera camera;
 
 	//Meta Info
 	public int currentLevel;
 	public int maxLevel;
 	int daysLeft;
+	TimeOfDay timeOfDay;
+	public Color midnightColor;
+	public Color noonColor;
 
 	//Level Info
 	public int levelHeight;
 	public int levelWidth;
-
 	public int levelMaxSize;
 	public int levelMinSize;
 
@@ -39,7 +43,7 @@ public class GameController : MonoBehaviour {
 
 	//Storage
 	GameObject[] tileGrid;
-	List<GameObject> AIParties;
+	//List<GameObject> AIParties;
 	public GameObject playerPartyObject;
 	Party playerParty;
 
@@ -49,15 +53,16 @@ public class GameController : MonoBehaviour {
 
 	void Start () {
 		daysLeft = 365;
+		timeOfDay = TimeOfDay.Midnight;
 		playerParty = playerPartyObject.GetComponent<Party> ();
-		AIParties = new List<GameObject> ();
+		//AIParties = new List<GameObject> ();
 		tileGrid = new GameObject[0];
 		ChangeLevel (LevelType.Fields);
 	}
 	// Update is called once per frame
 	void Update () {
+		
 	}
-
 	public void ChangeLevel(LevelType type){
 		//increment level
 		currentLevel++;
@@ -85,11 +90,9 @@ public class GameController : MonoBehaviour {
 		float offsetY = height/2f;
 		if (width % 2 == 1) {
 			offsetX-=.5f;
-			//width++;
 		}
 		if (height % 2 == 1) {
 			offsetY-=.5f;
-			//height++;
 		}
 
 		//fill tiles
@@ -166,10 +169,59 @@ public class GameController : MonoBehaviour {
 	}
 	//updates UI, enemies take turns, etc.
 	public void PlayerTakesTurn(){
-		daysLeft--;
-		uiBank.daysLeftText.text = daysLeft.ToString();
-	}
+		AdvanceTime ();
 
+	}
+	public void AdvanceTime(){
+		switch(timeOfDay)
+		{
+		case TimeOfDay.Midnight:
+			timeOfDay = TimeOfDay.Twilight;
+			uiBank.timeOfDayText.text = "twilight";
+			camera.backgroundColor = Color.Lerp(midnightColor, noonColor, .25f);
+			break;
+		case TimeOfDay.Twilight:
+			timeOfDay = TimeOfDay.DayBreak;
+			uiBank.timeOfDayText.text = "day break";
+			camera.backgroundColor = Color.Lerp(midnightColor, noonColor, .5f);
+			break;
+		case TimeOfDay.DayBreak:
+			timeOfDay = TimeOfDay.Morning;
+			uiBank.timeOfDayText.text = "morning";
+			camera.backgroundColor = Color.Lerp(midnightColor, noonColor, .75f);
+			break;
+		case TimeOfDay.Morning:
+			timeOfDay = TimeOfDay.Noon;
+			uiBank.timeOfDayText.text = "noon";
+			camera.backgroundColor = Color.Lerp(midnightColor, noonColor, 1.0f);
+			break;
+		case TimeOfDay.Noon:
+			timeOfDay = TimeOfDay.Afternoon;
+			uiBank.timeOfDayText.text = "afternoon";
+			camera.backgroundColor = Color.Lerp(midnightColor, noonColor, .75f);
+			break;
+		case TimeOfDay.Afternoon:
+			timeOfDay = TimeOfDay.Evening;
+			uiBank.timeOfDayText.text = "evening";
+			camera.backgroundColor = Color.Lerp(midnightColor, noonColor, .5f);
+			break;
+		case TimeOfDay.Evening:
+			timeOfDay = TimeOfDay.Night;
+			uiBank.timeOfDayText.text = "night";
+			camera.backgroundColor = Color.Lerp(midnightColor, noonColor, .25f);
+			break;
+		case TimeOfDay.Night:
+			timeOfDay = TimeOfDay.Midnight;
+			uiBank.timeOfDayText.text = "midnight";
+			camera.backgroundColor = Color.Lerp(midnightColor, noonColor, 0.0f);
+			daysLeft--;
+			break;
+		default: 
+			break;
+		}
+		uiBank.daysLeftText.text = daysLeft.ToString();
+
+	}
 	public int GetLevelHeight(){
 		return levelHeight;
 	}

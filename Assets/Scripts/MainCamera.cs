@@ -80,7 +80,6 @@ public class MainCamera : MonoBehaviour {
 		mapRows = levelControllerScript.GetLevelHeight();
 		mapCols = levelControllerScript.GetLevelWidth();
 
-
 		czm = cameraCurrentZoom;
 
 		//clamps camera position so we don't go off the board 
