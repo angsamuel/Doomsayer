@@ -25,6 +25,7 @@ public class PlayerInputController : MonoBehaviour {
 		canMoveWest = true;
 		gameControllerObject = GameObject.Find ("GameController") as GameObject;
 		gameController = gameControllerObject.GetComponent<GameController> ();
+        UpdateUI();
 	}
 	
 	// Update is called once per frame
@@ -34,45 +35,45 @@ public class PlayerInputController : MonoBehaviour {
 		camera.transform.position = new Vector3 (playerParty.transform.position.x, playerParty.transform.position.y, camera.transform.position.z);
 		if (PlayerMove ()) {
 			gameController.PlayerTakesTurn ();
-			uiBank.wakeText.text = playerParty.GetWake ().ToString ();
+            UpdateUI();
 		}
 		camera.transform.position = new Vector3 (playerParty.transform.position.x, playerParty.transform.position.y, camera.transform.position.z);
 
 	}
+
+    void UpdateUI()
+    {
+        uiBank.wakeText.text = playerParty.GetWake().ToString();
+        uiBank.foodText.text = playerParty.GetFood().ToString();
+    }
 	public bool PlayerMove(){
-		if (playerParty.GetWake() > 0) {
 			if (Input.GetAxisRaw ("MoveNorth") != 0 && canMoveNorth) {
 				canMoveNorth = false;
-				playerParty.AddWake (-1);
 				return playerParty.MoveNorth ();
 			} else if (Input.GetAxisRaw ("MoveNorth") == 0) {
 				canMoveNorth = true;
 			} 
 			if (Input.GetAxisRaw ("MoveSouth") != 0 && canMoveSouth) {
 				canMoveSouth = false;
-				playerParty.AddWake (-1);
 				return playerParty.MoveSouth ();
 			} else if (Input.GetAxisRaw ("MoveSouth") == 0) {
 				canMoveSouth = true;
 			} 
 			if (Input.GetAxisRaw ("MoveEast") != 0 && canMoveEast) {
 				canMoveEast = false;
-				playerParty.AddWake (-1);
 				return playerParty.MoveEast ();
 			} else if (Input.GetAxisRaw ("MoveEast") == 0) {
 				canMoveEast = true;
 			} 
 			if (Input.GetAxisRaw ("MoveWest") != 0 && canMoveWest) {
 				canMoveWest = false;
-				playerParty.AddWake (-1);
 				return playerParty.MoveWest ();
 			} else if (Input.GetAxisRaw ("MoveWest") == 0) {
 				canMoveWest = true;
 			}
-		}
+		
 		if (Input.GetAxisRaw ("Wait") != 0 && canWait) {
 			canWait = false;
-			playerParty.AddWake (4);
 			return true;
 		} else if(Input.GetAxisRaw("Wait")==0){
 			canWait = true;

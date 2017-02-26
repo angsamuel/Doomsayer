@@ -4,7 +4,14 @@ using System.Collections;
 public class Party : MonoBehaviour {
 	int cordX;
 	int cordY;
-	int wake;
+
+    int wake;
+    int food;
+    int muns;
+    int chell;
+    int faith;
+
+    int partySize;
 
 	public bool isPlayerParty = false;
 	GameController gameController;
@@ -15,8 +22,34 @@ public class Party : MonoBehaviour {
 	void Start () {
 		cordX = 0;
 		cordY = 0;
-		wake = 16;
+		wake = 0;
+        food = 100;
+        muns = 0;
+        chell = 0;
+        faith = 0;
+        partySize = 1;
 	}
+    public int GetFood()
+    {
+        return food;
+    }
+    public void AddFood(int f)
+    {
+        food += f;
+        if (food < 0)
+        {
+            food = 0;
+        }
+    }
+    public void ConsumeFood()
+    {
+        food -= partySize;
+    }
+
+    public void GainWake()
+    {
+        wake++;
+    }
 	public int GetWake(){
 		return wake;
 	}
@@ -38,6 +71,8 @@ public class Party : MonoBehaviour {
 			transform.position = new Vector3 (x - gameController.GetLevelWidth () / 2, y - gameController.GetLevelHeight () / 2, transform.position.z);
 			cordX = x; 
 			cordY = y;
+            //bump Resources
+
 			return true;
 		} else if (x == gameController.exitX && y == gameController.exitY && isPlayerParty) {
 			transform.position = new Vector3 (x - gameController.GetLevelWidth () / 2, y - gameController.GetLevelHeight () / 2, transform.position.z);
@@ -73,5 +108,4 @@ public class Party : MonoBehaviour {
 	public bool MoveSouthWest (){
 		return Move (cordX - 1, cordY - 1);
 	}
-
 }

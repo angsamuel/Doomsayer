@@ -12,7 +12,7 @@ public class GameController : MonoBehaviour {
 	UIBank uiBank;
 
 	//Enums
-	enum TimeOfDay{Midnight, Twilight, DayBreak, Morning, Noon, Afternoon, Evening, Night};
+	public enum TimeOfDay{Midnight, Twilight, DayBreak, Morning, Noon, Afternoon, Evening, Night};
 	enum Direction {North, South, East, West};
 	public enum LevelType {Lava, Snow, Marsh, Desert, Fields};
 
@@ -169,8 +169,9 @@ public class GameController : MonoBehaviour {
 	}
 	//updates UI, enemies take turns, etc.
 	public void PlayerTakesTurn(){
-		AdvanceTime ();
+        //run through all the terms
 
+        AdvanceTime ();
 	}
 	public void AdvanceTime(){
 		switch(timeOfDay)
@@ -220,12 +221,27 @@ public class GameController : MonoBehaviour {
 			break;
 		}
 		uiBank.daysLeftText.text = daysLeft.ToString();
-
+        
+        //update resources
+        if (timeOfDay == TimeOfDay.Midnight)
+        {
+            DailyPartyEffect(playerParty);
+        }
 	}
+    public void DailyPartyEffect(Party p)
+    {
+        p.GainWake();
+        p.ConsumeFood();
+    }
+
 	public int GetLevelHeight(){
 		return levelHeight;
 	}
 	public int GetLevelWidth(){
 		return levelWidth;
 	}
+    public TimeOfDay GetTimeOfDay()
+    {
+        return timeOfDay;
+    }
 }
