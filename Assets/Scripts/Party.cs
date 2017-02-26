@@ -29,6 +29,23 @@ public class Party : MonoBehaviour {
         faith = 0;
         partySize = 1;
 	}
+
+	public void GainWake()
+	{
+		wake++;
+	}
+	public int GetWake(){
+		return wake;
+	}
+	public void AddWake(int w){
+		wake+=w;
+		if (wake > 16) {
+			wake = 16;
+		} else if (wake < 0) {
+			wake = 0;
+		}
+	}
+
     public int GetFood()
     {
         return food;
@@ -45,23 +62,16 @@ public class Party : MonoBehaviour {
     {
         food -= partySize;
     }
+	public int GetMuns(){
+		return muns;
+	}
+	public int GetChell(){
+		return chell;
+	}
 
-    public void GainWake()
-    {
-        wake++;
-    }
-	public int GetWake(){
-		return wake;
+	public int GetFaith(){
+		return faith;
 	}
-	public void AddWake(int w){
-		wake+=w;
-		if (wake > 16) {
-			wake = 16;
-		} else if (wake < 0) {
-			wake = 0;
-		}
-	}
-	
 	// Update is called once per frame
 	void Update () {
 	
