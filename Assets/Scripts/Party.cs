@@ -2,8 +2,8 @@
 using System.Collections;
 
 public class Party : MonoBehaviour {
-	int cordX;
-	int cordY;
+	public int cordX;
+	public int cordY;
 
     int wake;
     int food;
@@ -18,16 +18,17 @@ public class Party : MonoBehaviour {
 	// Use this for initialization
 	void Awake(){
 		gameController = GameObject.Find ("GameController").GetComponent<GameController>();
-	}
-	void Start () {
-		cordX = 0;
-		cordY = 0;
-		wake = 0;
+        cordX = 0;
+        cordY = 0;
+        wake = 0;
         food = 100;
         muns = 0;
         chell = 0;
         faith = 0;
         partySize = 1;
+    }
+	void Start () {
+
 	}
 
 	public void GainWake()

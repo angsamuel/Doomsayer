@@ -38,13 +38,27 @@ public class PlayerInputController : MonoBehaviour {
             UpdateUI();
 		}
 		camera.transform.position = new Vector3 (playerParty.transform.position.x, playerParty.transform.position.y, camera.transform.position.z);
-
 	}
 
     void UpdateUI()
     {
         uiBank.wakeText.text = playerParty.GetWake().ToString();
         uiBank.foodText.text = playerParty.GetFood().ToString();
+        if(gameController.GetEnvironmentGrid()[playerParty.cordY * gameController.levelWidth + playerParty.cordX] != null)
+        {
+            uiBank.currentTile.GetComponent<SpriteRenderer>().sprite = gameController.GetTileGrid()[playerParty.cordY * gameController.levelWidth + playerParty.cordX].GetComponent<SpriteRenderer>().sprite;
+            uiBank.currentTile.GetComponent<SpriteRenderer>().color = gameController.GetTileGrid()[playerParty.cordY * gameController.levelWidth + playerParty.cordX].GetComponent<SpriteRenderer>().color;
+            uiBank.currentEnvironment.GetComponent<SpriteRenderer>().sprite = gameController.GetEnvironmentGrid()[playerParty.cordY * gameController.levelWidth + playerParty.cordX].GetComponent<SpriteRenderer>().sprite;
+            uiBank.currentEnvironment.GetComponent<SpriteRenderer>().color = gameController.GetEnvironmentGrid()[playerParty.cordY * gameController.levelWidth + playerParty.cordX].GetComponent<SpriteRenderer>().color;
+            uiBank.currentEnvironmentText.text = gameController.GetEnvironmentGrid()[playerParty.cordY * gameController.levelWidth + playerParty.cordX].GetComponent<Environment>().GetName();
+        } else
+        {
+            uiBank.currentTile.GetComponent<SpriteRenderer>().sprite = gameController.GetTileGrid()[playerParty.cordY * gameController.levelWidth + playerParty.cordX].GetComponent<SpriteRenderer>().sprite;
+            uiBank.currentTile.GetComponent<SpriteRenderer>().color = gameController.GetTileGrid()[playerParty.cordY * gameController.levelWidth + playerParty.cordX].GetComponent<SpriteRenderer>().color;
+            //Destroy(uiBank.currentEnvironment.GetComponent<SpriteRenderer>().sprite);
+            uiBank.currentEnvironment.GetComponent<SpriteRenderer>().color = Color.clear;
+            uiBank.currentEnvironmentText.text = "N/A";
+        }
     }
 	public bool PlayerMove(){
 			if (Input.GetAxisRaw ("MoveNorth") != 0 && canMoveNorth) {

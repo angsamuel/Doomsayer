@@ -12,6 +12,10 @@ public class UIBank : MonoBehaviour {
 	public Text munsText;
 	public Text chellText;
 	public Text faithText;
+
+    public GameObject currentTile;
+    public GameObject currentEnvironment;
+    public Text currentEnvironmentText;
 	// Use this for initialization
 	void Start () {
 	

@@ -10,6 +10,7 @@ using System;
 public class GameController : MonoBehaviour {
 	//Scene Elements
 	UIBank uiBank;
+    EnvironmentBank environmentBank;
 
 	//Enums
 	public enum TimeOfDay{Midnight, Twilight, DayBreak, Morning, Noon, Afternoon, Evening, Night};
@@ -34,6 +35,8 @@ public class GameController : MonoBehaviour {
 	public int levelWidth;
 	public int levelMaxSize;
 	public int levelMinSize;
+    float offsetX;
+    float offsetY;
 
 	//Exit Info
 	public int exitX = 0;
@@ -43,26 +46,82 @@ public class GameController : MonoBehaviour {
 
 	//Storage
 	GameObject[] tileGrid;
+    GameObject[] environmentGrid;
+
+
 	//List<GameObject> AIParties;
 	public GameObject playerPartyObject;
 	Party playerParty;
 
 	void Awake(){
 		uiBank = GameObject.Find ("UIBank").GetComponent<UIBank> ();
-	}
+        environmentBank = GameObject.Find("EnvironmentBank").GetComponent<EnvironmentBank>();
+        daysLeft = 365;
+        timeOfDay = TimeOfDay.Midnight;
+        playerParty = playerPartyObject.GetComponent<Party>();
+        //AIParties = new List<GameObject> ();
+        tileGrid = new GameObject[0];
+        environmentGrid = new GameObject[0];
+        ChangeLevel(LevelType.Fields);
+    }
 
 	void Start () {
-		daysLeft = 365;
-		timeOfDay = TimeOfDay.Midnight;
-		playerParty = playerPartyObject.GetComponent<Party> ();
-		//AIParties = new List<GameObject> ();
-		tileGrid = new GameObject[0];
-		ChangeLevel (LevelType.Fields);
+
 	}
 	// Update is called once per frame
 	void Update () {
 		
 	}
+
+    public void MakeEnvironments()
+    {
+        
+        for (int i = 0; i < environmentGrid.Length; ++i)
+        {
+            Destroy(environmentGrid[i]);
+        }
+        environmentGrid = new GameObject[levelWidth * levelHeight];
+        //Make Coordinates
+        List<Vector2> coords = new List<Vector2>();
+        for (int x = 0; x < levelWidth; x++)
+        {
+            for (int y = 0; y < levelHeight; y++)
+            {
+                coords.Add(new Vector2(x, y));
+            }
+        }
+        //shuffle coordinates
+        for (int i = 0; i < coords.Count; i++)
+        {
+            Vector3 temp = coords[i];
+            int randomIndex = UnityEngine.Random.Range(0, coords.Count);
+            coords[i] = coords[randomIndex];
+            coords[randomIndex] = temp;
+        }
+        MakePlains(coords);
+    }
+
+    public void MakePlains(List<Vector2> coords)
+    {
+        for(int i = 0; i<10; i++)
+        {
+            int x = Convert.ToInt32(coords[0].x);
+            int y = Convert.ToInt32(coords[0].y);
+            coords.RemoveAt(0);
+            GameObject spawnedForest = Instantiate(environmentBank.forest, new Vector3(x - offsetX, y - offsetY, 99), Quaternion.identity) as GameObject;
+            environmentGrid[y * levelWidth + x] = spawnedForest;
+        }
+    }
+
+    public GameObject[] GetEnvironmentGrid()
+    {
+        return environmentGrid;
+    }
+    public GameObject[] GetTileGrid()
+    {
+        return tileGrid;
+    }
+
 	public void ChangeLevel(LevelType type){
 		//increment level
 		currentLevel++;
@@ -86,8 +145,8 @@ public class GameController : MonoBehaviour {
 		int height = levelHeight;
 
 		//determine offset
-		float offsetX = width/2f;
-		float offsetY = height/2f;
+		offsetX = width/2f;
+		offsetY = height/2f;
 		if (width % 2 == 1) {
 			offsetX-=.5f;
 		}
@@ -95,7 +154,7 @@ public class GameController : MonoBehaviour {
 			offsetY-=.5f;
 		}
 
-		//fill tiles
+		//fill tileGrid
 		tileGrid = new GameObject[width*height];
 		for (int y = 0; y < height; y++) {
 			for (int x = 0; x < width; x++) {
@@ -103,7 +162,9 @@ public class GameController : MonoBehaviour {
 				tileGrid [y * width + x] = spawnedTile;
 			}
 		}
-			
+
+        MakeEnvironments();
+
 		//spawn player -- fix later
 		playerParty.GetComponent<Party>().Move(0,0);
 		if (exitSide == 0) {
