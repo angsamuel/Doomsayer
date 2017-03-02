@@ -37,6 +37,7 @@ public class GameController : MonoBehaviour {
 	public int levelMinSize;
     float offsetX;
     float offsetY;
+	List<Vector2> coords;
 
 	//Exit Info
 	public int exitX = 0;
@@ -54,6 +55,7 @@ public class GameController : MonoBehaviour {
 	Party playerParty;
 
 	void Awake(){
+		coords = new  List<Vector2> ();
 		uiBank = GameObject.Find ("UIBank").GetComponent<UIBank> ();
         environmentBank = GameObject.Find("EnvironmentBank").GetComponent<EnvironmentBank>();
         daysLeft = 365;
@@ -73,6 +75,14 @@ public class GameController : MonoBehaviour {
 		
 	}
 
+	public void SpawnEnvironment(GameObject e){
+		int x = Convert.ToInt32(coords[0].x);
+		int y = Convert.ToInt32(coords[0].y);
+		coords.RemoveAt(0);
+		GameObject spawnedEnvironment = Instantiate(e, new Vector3(x - offsetX, y - offsetY, 99), Quaternion.identity) as GameObject;
+		environmentGrid[y * levelWidth + x] = spawnedEnvironment;
+	}
+
     public void MakeEnvironments()
     {
         
@@ -82,7 +92,7 @@ public class GameController : MonoBehaviour {
         }
         environmentGrid = new GameObject[levelWidth * levelHeight];
         //Make Coordinates
-        List<Vector2> coords = new List<Vector2>();
+        coords = new List<Vector2>();
         for (int x = 0; x < levelWidth; x++)
         {
             for (int y = 0; y < levelHeight; y++)
@@ -103,14 +113,33 @@ public class GameController : MonoBehaviour {
 
     public void MakePlains(List<Vector2> coords)
     {
+		Debug.Log (coords.Count);
+
         for(int i = 0; i<10; i++)
         {
-            int x = Convert.ToInt32(coords[0].x);
-            int y = Convert.ToInt32(coords[0].y);
-            coords.RemoveAt(0);
-            GameObject spawnedForest = Instantiate(environmentBank.forest, new Vector3(x - offsetX, y - offsetY, 99), Quaternion.identity) as GameObject;
-            environmentGrid[y * levelWidth + x] = spawnedForest;
+			SpawnEnvironment (environmentBank.forest);
         }
+		SpawnEnvironment (environmentBank.holySite);
+
+		//spawn cities
+		for (int i = 0; i < 3; i++) {
+			SpawnEnvironment (environmentBank.city);
+
+		}
+		//spawn ruins
+		for (int i = 0; i < 5; i++) {
+			SpawnEnvironment (environmentBank.ruins);
+		}
+		Debug.Log (coords.Count);
+
+		//fill remaining areas with fields
+		for (int i = 0; i < coords.Count; i++) {
+			int x = Convert.ToInt32(coords[i].x);
+			int y = Convert.ToInt32(coords[i].y);
+			GameObject spawnedEnvironment = Instantiate(environmentBank.field, new Vector3(x - offsetX, y - offsetY, 99), Quaternion.identity) as GameObject;
+			environmentGrid[y * levelWidth + x] = spawnedEnvironment;
+		}
+		Debug.Log (coords.Count);
     }
 
     public GameObject[] GetEnvironmentGrid()
@@ -166,15 +195,15 @@ public class GameController : MonoBehaviour {
         MakeEnvironments();
 
 		//spawn player -- fix later
-		playerParty.GetComponent<Party>().Move(0,0);
+		playerParty.GetComponent<Party>().Teleport(0,0);
 		if (exitSide == 0) {
-			playerParty.Move (exitPosition, 0);
+			playerParty.Teleport (exitPosition, 0);
 		} else if (exitSide == 1) {
-			playerParty.Move (exitPosition, levelHeight - 1);
+			playerParty.Teleport (exitPosition, levelHeight - 1);
 		} else if (exitSide == 2) {
-			playerParty.Move (0, exitPosition);
+			playerParty.Teleport (0, exitPosition);
 		} else if (exitSide == 3) {
-			playerParty.Move (levelWidth - 1, exitPosition);
+			playerParty.Teleport (levelWidth - 1, exitPosition);
 		}
 
 		//place exit

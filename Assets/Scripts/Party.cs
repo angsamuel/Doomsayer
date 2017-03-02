@@ -4,6 +4,7 @@ using System.Collections;
 public class Party : MonoBehaviour {
 	public int cordX;
 	public int cordY;
+	UIBank uiBank;
 
     int wake;
     int food;
@@ -26,9 +27,8 @@ public class Party : MonoBehaviour {
         chell = 0;
         faith = 0;
         partySize = 1;
-    }
+	}
 	void Start () {
-
 	}
 
 	public void GainWake()
@@ -40,9 +40,7 @@ public class Party : MonoBehaviour {
 	}
 	public void AddWake(int w){
 		wake+=w;
-		if (wake > 16) {
-			wake = 16;
-		} else if (wake < 0) {
+		if (wake < 0) {
 			wake = 0;
 		}
 	}
@@ -66,6 +64,12 @@ public class Party : MonoBehaviour {
 	public int GetMuns(){
 		return muns;
 	}
+	public void AddMuns(int m){
+		muns += m;
+		if (muns < 0) {
+			muns = 0;
+		}
+	}
 	public int GetChell(){
 		return chell;
 	}
@@ -73,17 +77,30 @@ public class Party : MonoBehaviour {
 	public int GetFaith(){
 		return faith;
 	}
+	public void AddFaith(int f){
+		faith += f;
+		if (faith < 0) {
+			faith = 0;
+		}
+	}
 	// Update is called once per frame
 	void Update () {
 	
 	}
-	public bool Move(int x, int y){
+	public bool Move(int x, int y){		
+		uiBank = GameObject.Find ("UIBank").GetComponent<UIBank> ();
+		if (Random.Range (0, 100) < wake) {
+			x = cordX + Random.Range(-1, 2);
+			y = cordY + Random.Range(-1, 2);
+			if (isPlayerParty) {
+				uiBank.WriteToMessageLog("you feel yourself slipping...");
+			}
+		}
 		if (x < gameController.GetLevelWidth () && y < gameController.GetLevelHeight () && x >= 0 && y >= 0) {
 			transform.position = new Vector3 (x - gameController.GetLevelWidth () / 2, y - gameController.GetLevelHeight () / 2, transform.position.z);
 			cordX = x; 
 			cordY = y;
             //bump Resources
-
 			return true;
 		} else if (x == gameController.exitX && y == gameController.exitY && isPlayerParty) {
 			transform.position = new Vector3 (x - gameController.GetLevelWidth () / 2, y - gameController.GetLevelHeight () / 2, transform.position.z);
@@ -93,6 +110,14 @@ public class Party : MonoBehaviour {
 			return true;
 		}
 		return false;
+	}
+
+	public bool Teleport(int x, int y){		
+		int tempWake = wake;
+		wake = 0;
+		Move (x, y);
+		wake = tempWake;
+		return true;
 	}
 
 	public bool MoveNorth (){

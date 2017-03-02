@@ -7,7 +7,6 @@ using UnityEngine;
 using System.Collections;
 
 public class MainCamera : MonoBehaviour {
-	public bool followPlayer = false;
 
 	//player to track
 	public GameObject player;
@@ -64,7 +63,8 @@ public class MainCamera : MonoBehaviour {
 
 		//calculate maximum camera zoom //Orthographic size = ((Vert Resolution)/(PPUScale * PPU)) * 0.5
 		cameraCurrentZoom = ((Screen.height)/(ppuScale * 32))*0.5000f;
-		cameraZoomMax = cameraCurrentZoom*2;
+		cameraZoomMax = cameraCurrentZoom/2;
+		cameraCurrentZoom = cameraZoomMax;
 		Camera.main.orthographicSize = cameraCurrentZoom;
 
 		//make the camera less sensitive as we zoom in
@@ -103,20 +103,16 @@ public class MainCamera : MonoBehaviour {
 				}
 			}
 		}
-		//ensure camera sensitivity adjusts for zoom level
-		//cameraSpeedCutBy = (1f - ((cameraCurrentZoom) / cameraZoomMax));
+
 		cameraSpeedCutBy = (cameraCurrentZoom+(cameraZoomMax*2)) / cameraZoomMax;
 	}
 
 	void Update()
 	{
-		if (followPlayer) {
-		} else {
-			float xAxisValue = Input.GetAxis ("CameraHorizontal") / cameraSpeedCutBy;
-			float yAxisValue = Input.GetAxis ("CameraVertical") / cameraSpeedCutBy;
-			if (Camera.current != null) {
-				Camera.current.transform.Translate (new Vector3 (xAxisValue, yAxisValue, 0.0f));
-			}
+		float xAxisValue = Input.GetAxis ("CameraHorizontal") / cameraSpeedCutBy;
+		float yAxisValue = Input.GetAxis ("CameraVertical") / cameraSpeedCutBy;
+		if (Camera.current != null) {
+			Camera.current.transform.Translate (new Vector3 (xAxisValue, yAxisValue, 0.0f));
 		}
 	}
 }
