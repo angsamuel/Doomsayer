@@ -1,7 +1,7 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Doomsayer", "Assembly-CSharp.csproj", "{16558EE0-8787-1780-800B-F99FDE8718B4}"
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2015
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Doomsayer", "Doomsayer.csproj", "{BF49166C-1F37-DB77-08B2-97EDDEBD9D57}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -9,15 +9,12 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{16558EE0-8787-1780-800B-F99FDE8718B4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{16558EE0-8787-1780-800B-F99FDE8718B4}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{16558EE0-8787-1780-800B-F99FDE8718B4}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{16558EE0-8787-1780-800B-F99FDE8718B4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BF49166C-1F37-DB77-08B2-97EDDEBD9D57}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BF49166C-1F37-DB77-08B2-97EDDEBD9D57}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BF49166C-1F37-DB77-08B2-97EDDEBD9D57}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BF49166C-1F37-DB77-08B2-97EDDEBD9D57}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(MonoDevelopProperties) = preSolution
-		StartupItem = Assembly-CSharp.csproj
 	EndGlobalSection
 EndGlobal
