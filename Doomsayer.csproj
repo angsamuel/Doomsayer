@@ -75,16 +75,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\City.cs" />
-    <Compile Include="Assets\Field.cs" />
-    <Compile Include="Assets\HolySite.cs" />
-    <Compile Include="Assets\NameWizard.cs" />
-    <Compile Include="Assets\Ruins.cs" />
+    <Compile Include="Assets\Environment.cs" />
+    <Compile Include="Assets\EnvironmentBank.cs" />
+    <Compile Include="Assets\Forest.cs" />
     <Compile Include="Assets\Scripts\CampaignManager.cs" />
-    <Compile Include="Assets\Scripts\Environment.cs" />
-    <Compile Include="Assets\Scripts\EnvironmentBank.cs" />
     <Compile Include="Assets\Scripts\Exit.cs" />
-    <Compile Include="Assets\Scripts\Forest.cs" />
     <Compile Include="Assets\Scripts\GameController.cs" />
     <Compile Include="Assets\Scripts\Level.cs" />
     <Compile Include="Assets\Scripts\MainCamera.cs" />
@@ -92,15 +87,6 @@
     <Compile Include="Assets\Scripts\PlayerInputController.cs" />
     <Compile Include="Assets\Scripts\Tile.cs" />
     <Compile Include="Assets\Scripts\UIBank.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Assets\Resources\Words\adj.txt" />
-    <None Include="Assets\Resources\Words\all_names.txt" />
-    <None Include="Assets\Resources\Words\female_names.txt" />
-    <None Include="Assets\Resources\Words\last_names.txt" />
-    <None Include="Assets\Resources\Words\male_names.txt" />
-    <None Include="Assets\Resources\Words\nouns.txt" />
-    <None Include="Assets\Resources\Words\village_nouns.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="GenerateTargetFrameworkMonikerAttribute" />
