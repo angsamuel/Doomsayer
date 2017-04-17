@@ -28,6 +28,7 @@ public class Party : MonoBehaviour {
         faith = 0;
         partySize = 1;
 	}
+<<<<<<< HEAD
 	void Start () {
 	}
 
@@ -45,6 +46,8 @@ public class Party : MonoBehaviour {
 		}
 	}
 
+=======
+>>>>>>> parent of 476512a... push from mac
     public int GetFood()
     {
         return food;
@@ -61,6 +64,7 @@ public class Party : MonoBehaviour {
     {
         food -= partySize;
     }
+<<<<<<< HEAD
 	public int GetMuns(){
 		return muns;
 	}
@@ -73,16 +77,34 @@ public class Party : MonoBehaviour {
 	public int GetChell(){
 		return chell;
 	}
+=======
+>>>>>>> parent of 476512a... push from mac
 
-	public int GetFaith(){
-		return faith;
+    public void GainWake()
+    {
+        wake++;
+    }
+	public int GetWake(){
+		return wake;
 	}
+	public void AddWake(int w){
+		wake+=w;
+		if (wake > 16) {
+			wake = 16;
+		} else if (wake < 0) {
+			wake = 0;
+		}
+	}
+<<<<<<< HEAD
 	public void AddFaith(int f){
 		faith += f;
 		if (faith < 0) {
 			faith = 0;
 		}
 	}
+=======
+	
+>>>>>>> parent of 476512a... push from mac
 	// Update is called once per frame
 	void Update () {
 	
